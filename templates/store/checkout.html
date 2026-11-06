@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Checkout | Northstar Store{% endblock %}
+{% block content %}
+<section class="page-wrap narrow"><p class="eyebrow">ALMOST THERE</p><h1 class="page-title">Checkout</h1><div class="checkout-layout"><form method="post" class="form-panel">{% csrf_token %}<h2>Delivery details</h2>{% for field in form %}<div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<small class="error">{{ error }}</small>{% endfor %}</div>{% endfor %}<button class="button button-dark full-button" type="submit">Place order · ₹{{ cart.get_total_price }}</button><p class="fine-print">Demo checkout: payment is not collected. Orders are placed using cash on delivery.</p></form><aside class="summary"><h2>Your order</h2>{% for item in cart %}<div class="summary-line"><span>{{ item.product.name }} × {{ item.quantity }}</span><strong>₹{{ item.total }}</strong></div>{% endfor %}<div class="summary-total"><span>Total</span><strong>₹{{ cart.get_total_price }}</strong></div></aside></div></section>
+{% endblock %}

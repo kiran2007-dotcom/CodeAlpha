@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Northstar Store{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{% url 'store:home' %}"><span class="brand-mark">N</span> NORTHSTAR<span class="brand-light"> / STORE</span></a>
+  <nav>
+    <a href="{% url 'store:home' %}">Shop</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'store:my_orders' %}">My orders</a>
+      <span class="nav-user">Hi, {{ user.first_name|default:user.username }}</span>
+      <form class="inline-form" method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="nav-button" type="submit">Log out</button></form>
+    {% else %}
+      <a href="{% url 'login' %}">Log in</a><a href="{% url 'store:signup' %}">Create account</a>
+    {% endif %}
+    <a class="cart-link" href="{% url 'store:cart_detail' %}">Cart <span>{{ request.session.cart|length|default:0 }}</span></a>
+  </nav>
+</header>
+{% if messages %}<div class="messages">{% for message in messages %}<div class="message {{ message.tags }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+<main>{% block content %}{% endblock %}</main>
+<footer><div><strong>NORTHSTAR / STORE</strong><p>Thoughtful essentials for everyday living.</p></div><span>Built as a CodeAlpha Full Stack Internship project.</span></footer>
+</body>
+</html>

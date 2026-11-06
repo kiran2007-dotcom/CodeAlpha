@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}My orders | Northstar Store{% endblock %}
+{% block content %}<section class="page-wrap"><p class="eyebrow">YOUR ACCOUNT</p><h1 class="page-title">My orders</h1>{% for order in orders %}<article class="order-card"><div><strong>Order #{{ order.id }}</strong><p>{{ order.created_at|date:"d M Y, h:i A" }}</p></div><div><strong>₹{{ order.total }}</strong><p>{{ order.get_status_display }}</p></div><div>{% for item in order.items.all %}<p>{{ item.product_name }} × {{ item.quantity }}</p>{% endfor %}</div></article>{% empty %}<div class="empty-state"><h2>No orders yet</h2><a class="button button-dark" href="{% url 'store:home' %}">Start shopping →</a></div>{% endfor %}</section>{% endblock %}
